@@ -27,7 +27,7 @@ CREATE TABLE `cargos` (
   `cargo` varchar(30) NOT NULL,
   `descripcion` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`idCargo`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -36,6 +36,7 @@ CREATE TABLE `cargos` (
 
 LOCK TABLES `cargos` WRITE;
 /*!40000 ALTER TABLE `cargos` DISABLE KEYS */;
+INSERT INTO `cargos` VALUES (1,'presidente','Maxima autoridad en un estado soverano'),(2,'alcalde','Autoridad a nivel municipal'),(3,'diputado','Autoridad a nivel departamenta');
 /*!40000 ALTER TABLE `cargos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -49,6 +50,7 @@ DROP TABLE IF EXISTS `departamentos`;
 CREATE TABLE `departamentos` (
   `idDepartamento` int(2) NOT NULL,
   `departamento` varchar(60) NOT NULL,
+  `cantidadDiputados` int(2) NOT NULL,
   PRIMARY KEY (`idDepartamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -59,6 +61,7 @@ CREATE TABLE `departamentos` (
 
 LOCK TABLES `departamentos` WRITE;
 /*!40000 ALTER TABLE `departamentos` DISABLE KEYS */;
+INSERT INTO `departamentos` VALUES (1,'Santa Ana',7),(2,'Sonsonate',6),(3,'San Salvador',24);
 /*!40000 ALTER TABLE `departamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -76,7 +79,7 @@ CREATE TABLE `municipios` (
   PRIMARY KEY (`idMunicipio`),
   KEY `municipios_FK` (`idDepartamento`),
   CONSTRAINT `municipios_FK` FOREIGN KEY (`idDepartamento`) REFERENCES `departamentos` (`idDepartamento`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,6 +88,7 @@ CREATE TABLE `municipios` (
 
 LOCK TABLES `municipios` WRITE;
 /*!40000 ALTER TABLE `municipios` DISABLE KEYS */;
+INSERT INTO `municipios` VALUES (1,1,'Santa Ana'),(2,1,'Metapan'),(3,2,'Izalco'),(4,3,'Soyapango'),(5,3,'Mejicanos');
 /*!40000 ALTER TABLE `municipios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -100,7 +104,7 @@ CREATE TABLE `partidos` (
   `nombre` varchar(60) NOT NULL,
   `descripcion` varchar(300) DEFAULT NULL,
   PRIMARY KEY (`idPartido`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -109,6 +113,7 @@ CREATE TABLE `partidos` (
 
 LOCK TABLES `partidos` WRITE;
 /*!40000 ALTER TABLE `partidos` DISABLE KEYS */;
+INSERT INTO `partidos` VALUES (1,'NUEVAS IDEAS','PARTIDO CON LA N DE NAYIB DICTADOR'),(2,'ARENA','LOS MAÑOSITOS DEVUELVAN LO ROBADO'),(3,'FRENTE','SON ARENA 2.0'),(4,'GANA','LOS OPORTUNISTAS'),(5,'PDC','APENAS VIVOS');
 /*!40000 ALTER TABLE `partidos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -123,7 +128,7 @@ CREATE TABLE `rol` (
   `idRol` int(1) NOT NULL AUTO_INCREMENT,
   `rol` varchar(50) NOT NULL,
   PRIMARY KEY (`idRol`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -132,6 +137,7 @@ CREATE TABLE `rol` (
 
 LOCK TABLES `rol` WRITE;
 /*!40000 ALTER TABLE `rol` DISABLE KEYS */;
+INSERT INTO `rol` VALUES (1,'administrador'),(2,'usuario');
 /*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -157,7 +163,7 @@ CREATE TABLE `usuarios` (
   KEY `usuarios_FK` (`idRol`),
   CONSTRAINT `usuarios_FK` FOREIGN KEY (`idRol`) REFERENCES `rol` (`idRol`),
   CONSTRAINT `usuarios_FK_1` FOREIGN KEY (`idMunicipio`) REFERENCES `municipios` (`idMunicipio`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -166,6 +172,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'VALERI ALESSANDRA','DUEÑAS AVALOS',123456789,'F','12345',2,0,1),(2,'GABRIELA ALEXANDRA','DUEÑAS ALAS',987654321,'F','12345',2,0,1),(3,'JOSE ALEJANDRO','ARAGON RUGAMAS',111111111,'M','54321',1,0,2),(4,'CHRISTIAN VLADIMIR','AVALOS SERANOI',222222222,'M','98765',1,0,3);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,6 +203,7 @@ CREATE TABLE `votosCandidato` (
 
 LOCK TABLES `votosCandidato` WRITE;
 /*!40000 ALTER TABLE `votosCandidato` DISABLE KEYS */;
+INSERT INTO `votosCandidato` VALUES (3,2,2,NULL),(4,2,1,NULL);
 /*!40000 ALTER TABLE `votosCandidato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,4 +220,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-08 18:46:05
+-- Dump completed on 2021-06-09 15:12:57

@@ -38,6 +38,9 @@ public class Departamentos implements Serializable {
     @Basic(optional = false)
     @Column(name = "departamento", nullable = false, length = 60)
     private String departamento;
+    @Basic(optional = false)
+    @Column(name = "cantidadDiputados", nullable = false)
+    private int cantidadDiputados;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDepartamento")
     private List<Municipios> municipiosList;
 
@@ -48,9 +51,10 @@ public class Departamentos implements Serializable {
         this.idDepartamento = idDepartamento;
     }
 
-    public Departamentos(Integer idDepartamento, String departamento) {
+    public Departamentos(Integer idDepartamento, String departamento, int cantidadDiputados) {
         this.idDepartamento = idDepartamento;
         this.departamento = departamento;
+        this.cantidadDiputados = cantidadDiputados;
     }
 
     public Integer getIdDepartamento() {
@@ -67,6 +71,14 @@ public class Departamentos implements Serializable {
 
     public void setDepartamento(String departamento) {
         this.departamento = departamento;
+    }
+
+    public int getCantidadDiputados() {
+        return cantidadDiputados;
+    }
+
+    public void setCantidadDiputados(int cantidadDiputados) {
+        this.cantidadDiputados = cantidadDiputados;
     }
 
     @XmlTransient
