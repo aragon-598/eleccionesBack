@@ -6,6 +6,9 @@
 package occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository;
 
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.VotosCandidato;
+
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +18,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface RepositorioVotosCandidato extends JpaRepository<VotosCandidato, Integer>{
-    
+    public Optional<VotosCandidato> findByIdUsuario(Integer idUsuario);
+    public boolean existsByidUsuario(Integer idUsuario);
 }
