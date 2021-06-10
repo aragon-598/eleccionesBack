@@ -42,7 +42,7 @@ public class CargosRestController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @GetMapping("/findById/{id}")
+    @GetMapping("/findById/{idCargo}")
     public ResponseEntity<Cargos> findById(@PathVariable Integer idCargo){
         boolean existe;
         Cargos cargo;
