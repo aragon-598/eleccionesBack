@@ -23,10 +23,10 @@ DROP TABLE IF EXISTS `cargos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cargos` (
-  `idCargo` int(1) NOT NULL AUTO_INCREMENT,
+  `id_cargo` int(1) NOT NULL AUTO_INCREMENT,
   `cargo` varchar(30) NOT NULL,
   `descripcion` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`idCargo`)
+  PRIMARY KEY (`id_cargo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -48,10 +48,10 @@ DROP TABLE IF EXISTS `departamentos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `departamentos` (
-  `idDepartamento` int(2) NOT NULL,
+  `id_departamento` int(2) NOT NULL,
   `departamento` varchar(60) NOT NULL,
-  `cantidadDiputados` int(2) NOT NULL,
-  PRIMARY KEY (`idDepartamento`)
+  `cantidad_diputados` int(2) NOT NULL,
+  PRIMARY KEY (`id_departamento`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -73,12 +73,12 @@ DROP TABLE IF EXISTS `municipios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `municipios` (
-  `idMunicipio` int(3) NOT NULL AUTO_INCREMENT,
-  `idDepartamento` int(2) NOT NULL,
+  `id_municipio` int(3) NOT NULL AUTO_INCREMENT,
+  `id_departamento` int(2) NOT NULL,
   `municipio` varchar(70) NOT NULL,
-  PRIMARY KEY (`idMunicipio`),
-  KEY `municipios_FK` (`idDepartamento`),
-  CONSTRAINT `municipios_FK` FOREIGN KEY (`idDepartamento`) REFERENCES `departamentos` (`idDepartamento`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`id_municipio`),
+  KEY `municipios_FK` (`id_departamento`),
+  CONSTRAINT `municipios_FK` FOREIGN KEY (`id_departamento`) REFERENCES `departamentos` (`id_departamento`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -100,10 +100,10 @@ DROP TABLE IF EXISTS `partidos`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `partidos` (
-  `idPartido` int(2) NOT NULL AUTO_INCREMENT,
+  `id_partido` int(2) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(60) NOT NULL,
   `descripcion` varchar(300) DEFAULT NULL,
-  PRIMARY KEY (`idPartido`)
+  PRIMARY KEY (`id_partido`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -125,9 +125,9 @@ DROP TABLE IF EXISTS `rol`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `rol` (
-  `idRol` int(1) NOT NULL AUTO_INCREMENT,
+  `id_rol` int(1) NOT NULL AUTO_INCREMENT,
   `rol` varchar(50) NOT NULL,
-  PRIMARY KEY (`idRol`)
+  PRIMARY KEY (`id_rol`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -149,21 +149,21 @@ DROP TABLE IF EXISTS `usuarios`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `usuarios` (
-  `idUsuario` int(11) NOT NULL AUTO_INCREMENT,
-  `Nombres` varchar(50) NOT NULL,
-  `Apellidos` varchar(50) NOT NULL,
+  `id_usuario` int(11) NOT NULL AUTO_INCREMENT,
+  `nombres` varchar(50) NOT NULL,
+  `apellidos` varchar(50) NOT NULL,
   `dui` int(9) NOT NULL,
   `sexo` char(1) NOT NULL,
   `contrasenia` varchar(20) NOT NULL,
-  `idRol` int(1) NOT NULL,
-  `estadoVoto` tinyint(1) NOT NULL DEFAULT 0,
-  `idMunicipio` int(3) NOT NULL,
-  PRIMARY KEY (`idUsuario`),
-  KEY `usuarios_FK_1` (`idMunicipio`),
-  KEY `usuarios_FK` (`idRol`),
-  CONSTRAINT `usuarios_FK` FOREIGN KEY (`idRol`) REFERENCES `rol` (`idRol`),
-  CONSTRAINT `usuarios_FK_1` FOREIGN KEY (`idMunicipio`) REFERENCES `municipios` (`idMunicipio`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+  `id_rol` int(1) NOT NULL,
+  `estado_voto` tinyint(1) NOT NULL DEFAULT 0,
+  `id_municipio` int(3) NOT NULL,
+  PRIMARY KEY (`id_usuario`),
+  KEY `usuarios_FK_1` (`id_municipio`),
+  KEY `usuarios_FK` (`id_rol`),
+  CONSTRAINT `usuarios_FK` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`),
+  CONSTRAINT `usuarios_FK_1` FOREIGN KEY (`id_municipio`) REFERENCES `municipios` (`id_municipio`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -177,34 +177,34 @@ INSERT INTO `usuarios` VALUES (1,'VALERI ALESSANDRA','DUEÑAS AVALOS',123456789,
 UNLOCK TABLES;
 
 --
--- Table structure for table `votosCandidato`
+-- Table structure for table `votos_candidato`
 --
 
-DROP TABLE IF EXISTS `votosCandidato`;
+DROP TABLE IF EXISTS `votos_candidato`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `votosCandidato` (
-  `idUsuario` int(11) NOT NULL,
-  `idCargo` int(1) NOT NULL,
-  `idPartido` int(2) NOT NULL,
+CREATE TABLE `votos_candidato` (
+  `id_usuario` int(11) NOT NULL,
+  `id_cargo` int(1) NOT NULL,
+  `id_partido` int(2) NOT NULL,
   `votos` int(9) DEFAULT NULL,
-  PRIMARY KEY (`idUsuario`),
-  KEY `votosCandidato_FK_1` (`idPartido`),
-  KEY `votosCandidato_FK_2` (`idCargo`),
-  CONSTRAINT `votosCandidato_FK` FOREIGN KEY (`idUsuario`) REFERENCES `usuarios` (`idUsuario`),
-  CONSTRAINT `votosCandidato_FK_1` FOREIGN KEY (`idPartido`) REFERENCES `partidos` (`idPartido`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `votosCandidato_FK_2` FOREIGN KEY (`idCargo`) REFERENCES `cargos` (`idCargo`) ON DELETE CASCADE ON UPDATE CASCADE
+  PRIMARY KEY (`id_usuario`),
+  KEY `votosCandidato_FK_1` (`id_partido`),
+  KEY `votosCandidato_FK_2` (`id_cargo`),
+  CONSTRAINT `votosCandidato_FK` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
+  CONSTRAINT `votosCandidato_FK_1` FOREIGN KEY (`id_partido`) REFERENCES `partidos` (`id_partido`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `votosCandidato_FK_2` FOREIGN KEY (`id_cargo`) REFERENCES `cargos` (`id_cargo`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `votosCandidato`
+-- Dumping data for table `votos_candidato`
 --
 
-LOCK TABLES `votosCandidato` WRITE;
-/*!40000 ALTER TABLE `votosCandidato` DISABLE KEYS */;
-INSERT INTO `votosCandidato` VALUES (3,2,2,NULL),(4,2,1,NULL);
-/*!40000 ALTER TABLE `votosCandidato` ENABLE KEYS */;
+LOCK TABLES `votos_candidato` WRITE;
+/*!40000 ALTER TABLE `votos_candidato` DISABLE KEYS */;
+INSERT INTO `votos_candidato` VALUES (3,2,2,NULL),(4,2,1,NULL);
+/*!40000 ALTER TABLE `votos_candidato` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -220,4 +220,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-09 15:12:57
+-- Dump completed on 2021-06-09 23:59:13

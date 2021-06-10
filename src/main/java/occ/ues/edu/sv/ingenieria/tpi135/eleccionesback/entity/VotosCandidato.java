@@ -42,7 +42,7 @@ public class VotosCandidato implements Serializable {
     @JoinColumn(name = "id_partido", referencedColumnName = "id_partido", nullable = false)
     @ManyToOne(optional = false)
     private Partidos idPartido;
-    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = false)
     @OneToOne(optional = false)
     private Usuarios usuarios;
 
