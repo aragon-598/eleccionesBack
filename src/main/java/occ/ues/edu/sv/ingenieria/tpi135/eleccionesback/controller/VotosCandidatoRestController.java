@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Usuarios;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.VotosCandidato;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioUsuarios;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioVotosCandidato;
@@ -55,8 +56,8 @@ public class VotosCandidatoRestController {
         
         List<VotosCandidato> listaCandidatos = new ArrayList<>();
         try {
-            System.out.println("ESTO ME DA ERROR POR AHORITA, AQUI NO PASA: " + votosCandidatoRepository.existsByidUsuario(votosCandidato.getIdUsuario().getIdUsuario()));
-            existe = votosCandidatoRepository.existsByidUsuario(votosCandidato.getIdUsuario().getIdUsuario());
+            System.out.println("ESTO ME DA ERROR POR AHORITA, AQUI NO PASA: " + votosCandidatoRepository.existsByidUsuario(votosCandidato.getIdUsuario()));
+            existe = votosCandidatoRepository.existsByidUsuario(votosCandidato.getIdUsuario());
             if (votosCandidato != null && !existe) {
                 listaCandidatos = votosCandidatoRepository.cargoOcupado(votosCandidato.getIdCargo().getCargo(), votosCandidato.getIdPartido().getNombre());//obtenemos los candidatos de un determinado partido
                 long cantidad = listaCandidatos.stream().filter(d -> d.getIdUsuario().getIdMunicipio().getIdDepartamento() == votosCandidato.getIdUsuario().getIdMunicipio().getIdDepartamento()).count();//filtramos para tener un conteo de los diputados de un departamento de un partido
@@ -93,18 +94,21 @@ public class VotosCandidatoRestController {
     public ResponseEntity<VotosCandidato> actualizarVotos(@RequestBody VotosCandidato votosCandidato) {
 
         try {
-            boolean existe = votosCandidatoRepository.existsByidUsuario(votosCandidato.getIdUsuario().getIdUsuario());
+            if(votosCandidato != null ){
+               
+                boolean existe = votosCandidatoRepository.existsByidUsuario(votosCandidato.getIdUsuario());
 
-            if (existe) {
-                VotosCandidato votosExistente = votosCandidatoRepository.findByIdUsuario(votosCandidato.getIdUsuario().getIdUsuario()).get();
+                if (existe) {
+                    VotosCandidato votosExistente = votosCandidatoRepository.findByIdUsuario(votosCandidato.getIdUsuario()).get();
 
-                Integer votosActualizados = votosExistente.getVotos() + votosCandidato.getVotos();
+                    Integer votosActualizados = votosExistente.getVotos() + votosCandidato.getVotos();
 
-                votosExistente.setVotos(votosActualizados);
+                    votosExistente.setVotos(votosActualizados);
 
-                votosCandidatoRepository.save(votosExistente);
+                    votosCandidatoRepository.save(votosExistente);
 
-                return ResponseEntity.ok(votosExistente);
+                    return ResponseEntity.ok(votosExistente);
+                }
             }
         } catch (Exception e) {
             logger.error("Error actualizando VotosCandidato", e);

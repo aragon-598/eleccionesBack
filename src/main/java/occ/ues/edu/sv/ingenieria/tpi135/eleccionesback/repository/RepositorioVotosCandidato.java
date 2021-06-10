@@ -6,6 +6,8 @@
 package occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository;
 
 import java.util.List;
+
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Usuarios;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.VotosCandidato;
 
 import java.util.Optional;
@@ -21,8 +23,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface RepositorioVotosCandidato extends JpaRepository<VotosCandidato, Integer>{
-    public Optional<VotosCandidato> findByIdUsuario(Integer idUsuario);
-    public boolean existsByidUsuario(Integer idUsuario);
+    public Optional<VotosCandidato> findByIdUsuario(Usuarios idUsuario);
+    public boolean existsByidUsuario(Usuarios idUsuario);
     
     @Query("SELECT v FROM VotosCandidato v WHERE v.idCargo.cargo = :cargo AND v.idPartido = :partido")
     public List<VotosCandidato> cargoOcupado(@Param("cargo") String cargo, @Param("partido") String partido);
