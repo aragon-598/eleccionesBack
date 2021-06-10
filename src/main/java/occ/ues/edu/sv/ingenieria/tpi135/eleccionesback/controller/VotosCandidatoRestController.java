@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.dto.VotosCandidatoDTO;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.VotosCandidato;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioVotosCandidato;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +34,11 @@ public class VotosCandidatoRestController {
     }
 
     @GetMapping(path = "/findAll")
-    public ResponseEntity<List<VotosCandidato>> findAll() {
+    public ResponseEntity<List<VotosCandidatoDTO>> findAll() {
+
+        List<VotosCandidatoDTO> listaDto = new ArrayList<>();
+        VotosCandidato votosCandidato=new VotosCandidato();
+        VotosCandidatoDTO vCandidatoDTO=new VotosCandidatoDTO();
 
         try {
             List<VotosCandidato> registros = new ArrayList<>();
@@ -41,7 +46,21 @@ public class VotosCandidatoRestController {
             registros = votosCandidatoRepository.findAll();
 
             if (registros != null && !registros.isEmpty()) {
-                return ResponseEntity.ok(registros);
+
+                for (int i = 0; i < registros.size(); i++) {
+                    votosCandidato=registros.get(i);
+                    vCandidatoDTO.setIdUsuario(votosCandidato.getIdUsuario());
+                    vCandidatoDTO.setVotos(votosCandidato.getVotos());
+                    vCandidatoDTO.setIdCargo(votosCandidato.getIdCargo().getIdCargo());
+                    vCandidatoDTO.setIdPartido(votosCandidato.getIdPartido().getIdPartido());
+                    
+                    listaDto.add(vCandidatoDTO);
+
+                    vCandidatoDTO=new VotosCandidatoDTO();
+
+                }
+
+                return ResponseEntity.ok(listaDto);
             }
         } catch (Exception e) {
             logger.error("Error en findAll", e);

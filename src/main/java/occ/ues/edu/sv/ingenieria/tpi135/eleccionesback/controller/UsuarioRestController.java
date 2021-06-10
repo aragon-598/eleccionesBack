@@ -40,7 +40,6 @@ public class UsuarioRestController {
         List<UsuariosDTO> listaDto = new ArrayList<>();
         UsuariosDTO userDto=new UsuariosDTO();
         Usuarios user=null;
-        int count=0;
 
         if (repoUsuarios == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
