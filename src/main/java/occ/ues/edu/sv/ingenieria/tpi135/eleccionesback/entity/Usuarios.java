@@ -7,6 +7,7 @@ package occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -18,9 +19,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -63,9 +65,9 @@ public class Usuarios implements Serializable {
     @JoinColumn(name = "id_rol", referencedColumnName = "id_rol", nullable = false)
     @ManyToOne(optional = false)
     private Rol idRol;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarios")
-     @JsonIgnore
-    private VotosCandidato votosCandidato;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    @JsonIgnore
+    private List<VotosCandidato> votosCandidatoList;
 
     public Usuarios() {
     }
@@ -156,12 +158,13 @@ public class Usuarios implements Serializable {
         this.idRol = idRol;
     }
 
-    public VotosCandidato getVotosCandidato() {
-        return votosCandidato;
+    @XmlTransient
+    public List<VotosCandidato> getVotosCandidatoList() {
+        return votosCandidatoList;
     }
 
-    public void setVotosCandidato(VotosCandidato votosCandidato) {
-        this.votosCandidato = votosCandidato;
+    public void setVotosCandidatoList(List<VotosCandidato> votosCandidatoList) {
+        this.votosCandidatoList = votosCandidatoList;
     }
 
     @Override
