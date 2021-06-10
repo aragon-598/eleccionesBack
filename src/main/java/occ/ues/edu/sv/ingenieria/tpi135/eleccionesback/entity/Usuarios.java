@@ -5,6 +5,7 @@
  */
 package occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -63,6 +64,7 @@ public class Usuarios implements Serializable {
     @ManyToOne(optional = false)
     private Rol idRol;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarios")
+     @JsonIgnore
     private VotosCandidato votosCandidato;
 
     public Usuarios() {

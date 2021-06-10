@@ -5,6 +5,7 @@
  */
 package occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -44,6 +45,7 @@ public class VotosCandidato implements Serializable {
     private Partidos idPartido;
     @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = false)
     @OneToOne(optional = false)
+    @JsonIgnore
     private Usuarios usuarios;
 
     public VotosCandidato() {
