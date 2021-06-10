@@ -1,9 +1,7 @@
 package occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.controller;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.dto.VotosCandidatoDTO;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.VotosCandidato;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioVotosCandidato;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,11 +31,7 @@ public class VotosCandidatoRestController {
     }
 
     @GetMapping(path = "/findAll")
-    public ResponseEntity<List<VotosCandidatoDTO>> findAll() {
-
-        List<VotosCandidatoDTO> listaDto = new ArrayList<>();
-        VotosCandidato votosCandidato=new VotosCandidato();
-        VotosCandidatoDTO vCandidatoDTO=new VotosCandidatoDTO();
+    public ResponseEntity<List<VotosCandidato>> findAll() {
 
         try {
             List<VotosCandidato> registros = new ArrayList<>();
@@ -46,21 +39,7 @@ public class VotosCandidatoRestController {
             registros = votosCandidatoRepository.findAll();
 
             if (registros != null && !registros.isEmpty()) {
-
-                for (int i = 0; i < registros.size(); i++) {
-                    votosCandidato=registros.get(i);
-                    vCandidatoDTO.setIdUsuario(votosCandidato.getIdUsuario());
-                    vCandidatoDTO.setVotos(votosCandidato.getVotos());
-                    vCandidatoDTO.setIdCargo(votosCandidato.getIdCargo().getIdCargo());
-                    vCandidatoDTO.setIdPartido(votosCandidato.getIdPartido().getIdPartido());
-                    
-                    listaDto.add(vCandidatoDTO);
-
-                    vCandidatoDTO=new VotosCandidatoDTO();
-
-                }
-
-                return ResponseEntity.ok(listaDto);
+                return ResponseEntity.ok(registros);
             }
         } catch (Exception e) {
             logger.error("Error en findAll", e);
