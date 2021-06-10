@@ -36,13 +36,13 @@ public class Usuarios implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idUsuario", nullable = false)
+    @Column(name = "id_usuario", nullable = false)
     private Integer idUsuario;
     @Basic(optional = false)
-    @Column(name = "Nombres", nullable = false, length = 50)
+    @Column(name = "nombres", nullable = false, length = 50)
     private String nombres;
     @Basic(optional = false)
-    @Column(name = "Apellidos", nullable = false, length = 50)
+    @Column(name = "apellidos", nullable = false, length = 50)
     private String apellidos;
     @Basic(optional = false)
     @Column(name = "dui", nullable = false)
@@ -54,16 +54,16 @@ public class Usuarios implements Serializable {
     @Column(name = "contrasenia", nullable = false, length = 20)
     private String contrasenia;
     @Basic(optional = false)
-    @Column(name = "estadoVoto", nullable = false)
+    @Column(name = "estado_voto", nullable = false)
     private boolean estadoVoto;
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarios")
-    private VotosCandidato votosCandidato;
-    @JoinColumn(name = "idMunicipio", referencedColumnName = "idMunicipio", nullable = false)
+    @JoinColumn(name = "id_municipio", referencedColumnName = "id_municipio", nullable = false)
     @ManyToOne(optional = false)
     private Municipios idMunicipio;
-    @JoinColumn(name = "idRol", referencedColumnName = "idRol", nullable = false)
+    @JoinColumn(name = "id_rol", referencedColumnName = "id_rol", nullable = false)
     @ManyToOne(optional = false)
     private Rol idRol;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "usuarios")
+    private VotosCandidato votosCandidato;
 
     public Usuarios() {
     }
@@ -138,14 +138,6 @@ public class Usuarios implements Serializable {
         this.estadoVoto = estadoVoto;
     }
 
-    public VotosCandidato getVotosCandidato() {
-        return votosCandidato;
-    }
-
-    public void setVotosCandidato(VotosCandidato votosCandidato) {
-        this.votosCandidato = votosCandidato;
-    }
-
     public Municipios getIdMunicipio() {
         return idMunicipio;
     }
@@ -160,6 +152,14 @@ public class Usuarios implements Serializable {
 
     public void setIdRol(Rol idRol) {
         this.idRol = idRol;
+    }
+
+    public VotosCandidato getVotosCandidato() {
+        return votosCandidato;
+    }
+
+    public void setVotosCandidato(VotosCandidato votosCandidato) {
+        this.votosCandidato = votosCandidato;
     }
 
     @Override

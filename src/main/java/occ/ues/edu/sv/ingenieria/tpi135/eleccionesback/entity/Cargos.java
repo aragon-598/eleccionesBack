@@ -5,6 +5,7 @@
  */
 package occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -36,7 +37,7 @@ public class Cargos implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idCargo", nullable = false)
+    @Column(name = "id_cargo", nullable = false)
     private Integer idCargo;
     @Basic(optional = false)
     @Column(name = "cargo", nullable = false, length = 30)
@@ -44,6 +45,7 @@ public class Cargos implements Serializable {
     @Column(name = "descripcion", length = 200)
     private String descripcion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idCargo")
+    @JsonIgnore
     private List<VotosCandidato> votosCandidatoList;
 
     public Cargos() {

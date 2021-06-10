@@ -5,6 +5,7 @@
  */
 package occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -36,12 +37,13 @@ public class Rol implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idRol", nullable = false)
+    @Column(name = "id_rol", nullable = false)
     private Integer idRol;
     @Basic(optional = false)
     @Column(name = "rol", nullable = false, length = 50)
     private String rol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idRol")
+    @JsonIgnore
     private List<Usuarios> usuariosList;
 
     public Rol() {

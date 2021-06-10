@@ -23,7 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author christian
  */
 @Entity
-@Table(name = "votosCandidato", schema = "eleccionesDB")
+@Table(name = "votos_candidato", schema = "eleccionesDB")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "VotosCandidato.findAll", query = "SELECT v FROM VotosCandidato v")})
@@ -32,17 +32,17 @@ public class VotosCandidato implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "idUsuario", nullable = false)
+    @Column(name = "id_usuario", nullable = false)
     private Integer idUsuario;
     @Column(name = "votos")
     private Integer votos;
-    @JoinColumn(name = "idCargo", referencedColumnName = "idCargo", nullable = false)
+    @JoinColumn(name = "id_cargo", referencedColumnName = "id_cargo", nullable = false)
     @ManyToOne(optional = false)
     private Cargos idCargo;
-    @JoinColumn(name = "idPartido", referencedColumnName = "idPartido", nullable = false)
+    @JoinColumn(name = "id_partido", referencedColumnName = "id_partido", nullable = false)
     @ManyToOne(optional = false)
     private Partidos idPartido;
-    @JoinColumn(name = "idUsuario", referencedColumnName = "idUsuario", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Usuarios usuarios;
 

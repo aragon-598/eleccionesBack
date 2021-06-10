@@ -5,6 +5,7 @@
  */
 package occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
@@ -33,15 +34,16 @@ public class Departamentos implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @Column(name = "idDepartamento", nullable = false)
+    @Column(name = "id_departamento", nullable = false)
     private Integer idDepartamento;
     @Basic(optional = false)
     @Column(name = "departamento", nullable = false, length = 60)
     private String departamento;
     @Basic(optional = false)
-    @Column(name = "cantidadDiputados", nullable = false)
+    @Column(name = "cantidad_diputados", nullable = false)
     private int cantidadDiputados;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idDepartamento")
+    @JsonIgnore
     private List<Municipios> municipiosList;
 
     public Departamentos() {
