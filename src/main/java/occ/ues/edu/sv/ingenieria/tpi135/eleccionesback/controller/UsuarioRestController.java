@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.dto.UsuariosDTO;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Usuarios;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioUsuarios;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +35,19 @@ public class UsuarioRestController {
     private RepositorioUsuarios repoUsuarios;
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<Usuarios>> findAll() {
+    public ResponseEntity<List<UsuariosDTO>> findAll() {
         List<Usuarios> lista = new ArrayList<>();
+        List<UsuariosDTO> listaDto = new ArrayList<>();
+        UsuariosDTO userDto=new UsuariosDTO();
+        Usuarios user=null;
+        int count=0;
 
         if (repoUsuarios == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         } else {
             try {
                 lista = repoUsuarios.findAll();
+
             } catch (Exception e) {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
             }
@@ -48,7 +55,22 @@ public class UsuarioRestController {
         if (lista.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
-            return new ResponseEntity<>(repoUsuarios.findAll(), HttpStatus.OK);
+            
+            for (int i =0;i<lista.size();i++) {
+                user=lista.get(i);
+                userDto.setIdUsuario(user.getIdUsuario());
+                userDto.setNombre(user.getNombres());
+                userDto.setApellido(user.getApellidos());
+                userDto.setDui(user.getDui());
+                userDto.setSexo(user.getSexo());
+                userDto.setEstadoVoto(user.getEstadoVoto());
+                userDto.setIdMunicipio(user.getIdMunicipio().getIdMunicipio());
+                userDto.setIdRol(user.getIdRol().getIdRol());
+                listaDto.add(userDto);
+
+                userDto= new UsuariosDTO();
+            }
+            return ResponseEntity.ok(listaDto);
         }
 
     }
