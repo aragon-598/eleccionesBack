@@ -1,5 +1,6 @@
 package occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,11 @@ public class VotosCandidatoRestController {
     public ResponseEntity<List<VotosCandidato>> findAll() {
         
         try {
-            List<VotosCandidato> registros = votosCandidatoRepository.findAll();
+            List<VotosCandidato> registros = new ArrayList<>();
 
-            if (registros != null) {
+            registros=votosCandidatoRepository.findAll();
+
+            if (registros != null && !registros.isEmpty()) {
                 return ResponseEntity.ok(registros);
             }
         } catch (Exception e) {
@@ -50,9 +53,10 @@ public class VotosCandidatoRestController {
     
     @PostMapping(path = "/crearVotoscandidatos")
     public ResponseEntity<VotosCandidato> crearEntity(@RequestBody VotosCandidato votosCandidato) {
-        
+        boolean existe;
         try {
-            if(votosCandidato != null){
+            existe=votosCandidatoRepository.existsByidUsuario(votosCandidato.getIdUsuario());
+            if(votosCandidato != null && !existe){
 
                 votosCandidatoRepository.save(votosCandidato);
     

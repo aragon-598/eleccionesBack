@@ -15,5 +15,6 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface RepositorioCargos extends JpaRepository<Cargos, Integer>{
-    
+
+    public boolean existsByIdCargo(Integer idCargo);
 }
