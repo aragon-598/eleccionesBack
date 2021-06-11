@@ -18,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -75,4 +76,27 @@ public class UsuarioRestController {
             }
         }
     }
+
+
+    @PutMapping("/checkvoto")
+    public ResponseEntity<Usuarios> checkVoto(@RequestBody Usuarios userChek){
+        Usuarios existe=new Usuarios();
+        try {
+            if (userChek != null) {
+                existe = repoUsuarios.findById(userChek.getIdUsuario()).get();
+                if (existe != null && userChek.getEstadoVoto()) {
+                    existe.setEstadoVoto(true);
+                    repoUsuarios.save(existe);
+
+                    return ResponseEntity.ok(existe);
+                }
+            }
+            
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
+
 }
