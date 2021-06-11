@@ -26,6 +26,6 @@ public interface RepositorioVotosCandidato extends JpaRepository<VotosCandidato,
     public Optional<VotosCandidato> findByIdUsuario(Usuarios idUsuario);
     public boolean existsByidUsuario(Usuarios idUsuario);
     
-    @Query("SELECT v FROM VotosCandidato v WHERE v.idCargo.cargo = :cargo AND v.idPartido = :partido")
+    @Query("SELECT v FROM VotosCandidato v WHERE v.idCargo.cargo = :cargo AND v.idPartido.nombre = :partido")
     public List<VotosCandidato> cargoOcupado(@Param("cargo") String cargo, @Param("partido") String partido);
 }
