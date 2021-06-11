@@ -6,6 +6,9 @@
 package occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository;
 
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Cargos;
+
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -17,4 +20,6 @@ import org.springframework.stereotype.Repository;
 public interface RepositorioCargos extends JpaRepository<Cargos, Integer>{
 
     public boolean existsByIdCargo(Integer idCargo);
+
+    public Optional<Cargos> findByCargo(String cargo);
 }

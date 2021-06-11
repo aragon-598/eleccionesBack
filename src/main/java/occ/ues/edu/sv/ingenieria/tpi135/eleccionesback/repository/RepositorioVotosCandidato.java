@@ -7,6 +7,7 @@ package occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository;
 
 import java.util.List;
 
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Cargos;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Usuarios;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.VotosCandidato;
 
@@ -28,4 +29,6 @@ public interface RepositorioVotosCandidato extends JpaRepository<VotosCandidato,
     
     @Query("SELECT v FROM VotosCandidato v WHERE v.idCargo.cargo = :cargo AND v.idPartido.nombre = :partido")
     public List<VotosCandidato> cargoOcupado(@Param("cargo") String cargo, @Param("partido") String partido);
+    
+    public List<VotosCandidato> findByIdCargo(Cargos idCargo);
 }

@@ -1,6 +1,7 @@
 package occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Cargos;
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Departamentos;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.VotosCandidato;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioCargos;
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioDepartamentos;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioPartidos;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioUsuarios;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioVotosCandidato;
@@ -21,6 +25,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/votosCandidatos")
@@ -34,6 +40,9 @@ public class VotosCandidatoRestController {
     RepositorioPartidos repoPartidos;
     @Autowired
     RepositorioCargos repoCargo;
+
+    @Autowired
+    RepositorioDepartamentos repoDepartamentos;
 
     private final static Logger logger = LoggerFactory.getLogger(VotosCandidatoRestController.class);
 
@@ -80,6 +89,50 @@ public class VotosCandidatoRestController {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
+
+    @GetMapping(path="/diputadosElegidos/{idDepartamento}")
+    public ResponseEntity<List<VotosCandidato>> diputadosDepartamento(@PathVariable Integer idDepartamento) {
+        
+        List<VotosCandidato> listaDiputados = new ArrayList<>();
+        List<VotosCandidato> listaCandidatos = new ArrayList<>();
+        Cargos cargo = repoCargo.findByCargo("diputado").get();
+
+        try {
+            
+            if (idDepartamento != null) {
+                Departamentos departamento = repoDepartamentos.findById(idDepartamento).get();
+                
+                if (departamento != null) {
+                    
+                    listaCandidatos = votosCandidatoRepository.findByIdCargo(cargo);
+                    for (VotosCandidato votosCandidato : listaCandidatos) {
+                        if (!votosCandidato.getIdUsuario().getIdMunicipio().getIdDepartamento().equals(departamento)) {
+                            listaCandidatos.remove(votosCandidato);
+                        }
+                        
+                    }
+                    
+
+                    Collections.sort(listaCandidatos);
+
+                    for(int i=0;i<8;i++){
+                        listaDiputados.add(listaCandidatos.get(i));
+                    }
+
+                    return ResponseEntity.ok(listaDiputados);
+
+                }else {
+                    
+                }
+            }
+
+        } catch (Exception e) {
+            logger.error("Error diputadosElegidos VotosCandidaos", e);
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
+    
 
     @PostMapping(path = "/crearVotoscandidatos")
     public ResponseEntity<Object> crearEntity(@RequestBody VotosCandidato votosCandidato) {

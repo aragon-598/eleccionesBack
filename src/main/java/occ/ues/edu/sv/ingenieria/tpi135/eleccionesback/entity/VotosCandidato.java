@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "VotosCandidato.findAll", query = "SELECT v FROM VotosCandidato v")})
-public class VotosCandidato implements Serializable {
+public class VotosCandidato implements Serializable,Comparable<VotosCandidato> {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -118,6 +118,11 @@ public class VotosCandidato implements Serializable {
     @Override
     public String toString() {
         return "occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.VotosCandidato[ idVotoCandidato=" + idVotoCandidato + " ]";
+    }
+
+    @Override
+    public int compareTo(VotosCandidato t){
+        return votos.compareTo(t.getVotos());
     }
     
 }
