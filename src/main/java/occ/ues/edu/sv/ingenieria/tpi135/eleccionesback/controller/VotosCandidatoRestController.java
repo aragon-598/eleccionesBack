@@ -14,9 +14,11 @@ import org.slf4j.LoggerFactory;
 
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Cargos;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Departamentos;
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Municipios;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.VotosCandidato;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioCargos;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioDepartamentos;
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioMunicipios;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioPartidos;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioUsuarios;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioVotosCandidato;
@@ -44,8 +46,14 @@ public class VotosCandidatoRestController {
     @Autowired
     RepositorioDepartamentos repoDepartamentos;
 
+    @Autowired
+    RepositorioMunicipios repoMunicipios;
+
     private final static Logger logger = LoggerFactory.getLogger(VotosCandidatoRestController.class);
 
+    /**
+     * Devuelve todos los registros de la DB
+     */
     @GetMapping(path = "/findAll")
     public ResponseEntity<List<VotosCandidato>> findAll() {
 
@@ -64,6 +72,11 @@ public class VotosCandidatoRestController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
+    /**
+     * Devuelve un candidato por su id
+     * @param id
+     * @return
+     */
     @GetMapping(path = "/findById/{id}")
     public ResponseEntity<VotosCandidato> getById(@PathVariable Integer id){
 
@@ -90,6 +103,112 @@ public class VotosCandidatoRestController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
+    /**
+     * Devuelve una lista de diputados por departamento
+     * @param id_departamento
+     * @return
+     */
+    @GetMapping(path = "/findDiputadosDepartamento/{id_departamento}")
+    public ResponseEntity<Object> findDiputadosDepartamento (@PathVariable Integer id_departamento){
+        List<VotosCandidato> diputadosDepartamento = new ArrayList<>();
+        Departamentos idDepartamento = new Departamentos();
+        Cargos cargo = repoCargo.findByCargo("diputado").get();
+        
+        try {
+            //Lista de diputados de todo el país
+            diputadosDepartamento = votosCandidatoRepository.findByIdCargo(cargo);
+            
+
+            if(id_departamento != null){
+                idDepartamento = repoDepartamentos.findById(id_departamento).get();
+                if (idDepartamento != null) {
+                    for (int i=0;i<diputadosDepartamento.size();i++) {
+                        if (diputadosDepartamento.get(i).getIdUsuario().getIdMunicipio().getIdDepartamento().equals(idDepartamento)) {
+                            diputadosDepartamento.remove(diputadosDepartamento.get(i));
+                        }
+                    }
+
+                    //Lista de diputados por el departamento ingresado
+                    return ResponseEntity.ok(diputadosDepartamento);
+                }
+
+            }
+
+        } catch (Exception e) {
+            logger.error("Error diputados por departamentos", e);
+        }
+        
+        return ResponseEntity.badRequest().build();
+    }
+
+    /**
+     * Devuelve una lista de alcaldes por municipio
+     * @param id_municipio
+     * @return
+     */
+    @GetMapping(path = "/findAlcaldesMunicipio/{id_municipio}")
+    public ResponseEntity<Object> findAlcaldesMunicipio (@PathVariable Integer id_municipio){
+        List<VotosCandidato> alcaldesMunicipio = new ArrayList<>();
+        Municipios municipio =new Municipios();
+        Cargos cargo = repoCargo.findById(2).get();
+        
+        try {
+            //Lista de diputados de todo el país
+            alcaldesMunicipio = votosCandidatoRepository.findByIdCargo(cargo);
+            System.out.println("LISTA DE ALCALDES"+alcaldesMunicipio.size());
+
+            if(id_municipio != null){
+                municipio = repoMunicipios.getById(id_municipio);
+                System.out.println("Municipioooooooooooooooooooooooooooooooooo"+municipio.getMunicipio());
+                if (municipio != null) {
+                    for (int i=0;i<alcaldesMunicipio.size();i++) {
+                        if(!alcaldesMunicipio.get(i).getIdUsuario().getIdMunicipio().equals(municipio)){
+                            alcaldesMunicipio.remove(alcaldesMunicipio.get(i));
+                        }
+                    }
+
+                    //Lista de diputados por el departamento ingresado
+                    return ResponseEntity.ok(alcaldesMunicipio);
+                }
+
+            }
+
+        } catch (Exception e) {
+            logger.error("Error Alcaldes por municipios", e);
+        }
+        
+        return ResponseEntity.badRequest().build();
+    }
+
+    /**
+     * Devuelve una lista con los candidatos a presidente
+     * @return
+     */
+    @GetMapping(path = "/findPresidentes")
+    public ResponseEntity<Object> findPresidente(){
+
+        List<VotosCandidato> listaPresidentes=new ArrayList<>();
+        
+        try {
+            Cargos cargo = repoCargo.findByCargo("presidente").get();
+
+            listaPresidentes = votosCandidatoRepository.findByIdCargo(cargo);
+
+            return ResponseEntity.ok(listaPresidentes);
+            
+        } catch (Exception e) {
+            logger.error("Error en devolver Presidentes",e);
+        }        
+
+
+        return ResponseEntity.badRequest().build();
+    }
+
+    /**
+     * Devuelve la lista de diputados escogidos por cada departamento que se indique con su ID
+     * @param idDepartamento
+     * @return
+     */
     @GetMapping(path="/diputadosElegidos/{idDepartamento}")
     public ResponseEntity<List<VotosCandidato>> diputadosDepartamento(@PathVariable Integer idDepartamento) {
         
@@ -103,7 +222,7 @@ public class VotosCandidatoRestController {
                 Departamentos departamento = repoDepartamentos.findById(idDepartamento).get();
                 
                 if (departamento != null) {
-                    
+                    System.out.println(cargo.getCargo());
                     listaCandidatos = votosCandidatoRepository.findByIdCargo(cargo);
                     for (VotosCandidato votosCandidato : listaCandidatos) {
                         if (!votosCandidato.getIdUsuario().getIdMunicipio().getIdDepartamento().equals(departamento)) {
@@ -113,13 +232,10 @@ public class VotosCandidatoRestController {
                     }
                     
 
-                    Collections.sort(listaCandidatos);
+                    Collections.sort(listaCandidatos, Collections.reverseOrder());
 
-                    for(int i=0;i<8;i++){
-                        listaDiputados.add(listaCandidatos.get(i));
-                    }
 
-                    return ResponseEntity.ok(listaDiputados);
+                    return ResponseEntity.ok(listaCandidatos);
 
                 }else {
                     
@@ -133,7 +249,70 @@ public class VotosCandidatoRestController {
         return ResponseEntity.badRequest().build();
     }
     
+    @GetMapping(path = "/alcaldeElectoMunicipio/{id_municipio}")
+    public ResponseEntity<Object> alcaldeElecto(@PathVariable Integer id_municipio){
 
+        List<VotosCandidato> listaAlcaldes = new ArrayList<>();
+        List<VotosCandidato> alcaldesMunicipios = new ArrayList<>();
+        Cargos cargo = new Cargos();
+
+        try {
+            cargo = repoCargo.findByCargo("alcalde").get();
+            if (id_municipio != null) {
+                Municipios municipio = new Municipios();
+                municipio=repoMunicipios.findById(id_municipio).get();
+                System.out.println("MUNICIPIOOOOOOOOOOOOOOOOOOOO"+municipio.getMunicipio());
+                listaAlcaldes = votosCandidatoRepository.findByIdCargo(cargo);
+                if (municipio!= null) {
+                    for (int i =0;i<listaAlcaldes.size();i++){
+                        if (listaAlcaldes.get(i).getIdUsuario().getIdMunicipio().getMunicipio().equals(municipio.getMunicipio())) {
+                            System.out.println("MUNICIPIOOOOOOOOOOOOO ["+i+"] "+listaAlcaldes.get(i).getIdUsuario().getIdMunicipio().getMunicipio());
+                            alcaldesMunicipios.add(listaAlcaldes.get(i));
+                        }
+                    }
+                    Collections.sort(alcaldesMunicipios, Collections.reverseOrder());
+
+                    return ResponseEntity.ok(alcaldesMunicipios.get(0));
+                }
+            }
+
+        } catch (Exception e) {
+            logger.error("Error en alcalde electo", e);
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
+
+    @GetMapping(path = "/presidenteElecto")
+    public ResponseEntity<Object> presidenteElecto(){
+
+        List<VotosCandidato> listaPresidentes=new ArrayList<>();
+
+        try {
+            
+            Cargos cargo = new Cargos();
+            cargo = repoCargo.findByCargo("presidente").get();
+
+            listaPresidentes =votosCandidatoRepository.findByIdCargo(cargo);
+
+            if (!listaPresidentes.isEmpty()) {
+                Collections.sort(listaPresidentes,Collections.reverseOrder());
+
+                return ResponseEntity.ok(listaPresidentes.get(0));
+            }
+
+        } catch (Exception e) {
+            logger.error("Error en presidenteElecto",e);
+        }
+        
+        return ResponseEntity.badRequest().build();
+    }
+
+    /**
+     * Persiste en la DB un nuevo Candidato
+     * @param votosCandidato
+     * @return
+     */
     @PostMapping(path = "/crearVotoscandidatos")
     public ResponseEntity<Object> crearEntity(@RequestBody VotosCandidato votosCandidato) {
         boolean existe;
@@ -176,6 +355,11 @@ public class VotosCandidatoRestController {
 
     }
 
+    /**
+     * Actualiza la cantidad de votos de cada candidato
+     * @param votosCandidato
+     * @return
+     */
     @PutMapping(path = "/actualizarvotos")
     public ResponseEntity<VotosCandidato> actualizarVotos(@RequestBody VotosCandidato votosCandidato) {
 
