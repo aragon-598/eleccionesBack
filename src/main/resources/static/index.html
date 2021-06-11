@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"  href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Document</title>
+</head>
+<body class="bg-dark">
+
+    <div class="container mt-4 text-white">
+        <h1>API documentation</h1>
+        <h2>BibliotecaWebApp</h2>
+    </div>
+
+    <div class="container mt-4">
+        <div class="card">
+            <h5 class="card-header"><span class="badge bg-success">Method GET</span></h5>
+            <div class="card-body">
+              <h5 class="card-title">Usuarios</h5>
+              <p class="card-text"> 
+                  <a href="https://localhost:8080/findAll">https://localhost:8080/usuario/findAll</a> 
+                  Obtiene todos los elementos de la tabla
+              </p>
+              <p class="card-text"> 
+                <a href="https://localhost:8080/">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/buscarId/{id}</a> 
+                Obtiene un elemento por id
+              </p>
+              <h5 class="card-title">Partidos</h5>
+              <p class="card-text"> 
+                  <a href="https://localhost:8080/partidos/findAll">https://localhost:8080/partidos/findAll</a> 
+                  Obtiene todos los elementos de la tabla
+              </p>
+              <p class="card-text"> 
+                <a href="https://localhost:8080/partidos/findById/">https://localhost:8080/partidos/findById/{id}</a> 
+                Obtiene un elemento por id
+              </p>
+              <h5 class="card-title">VotosCandidato</h5>
+                <p class="card-text"> 
+                    <a href="https://localhost:8080/votosCandidatos/findAll">https://localhost:8080/votosCandidatos/findAll</a> 
+                    Obtiene todos los elementos de la tabla
+                </p>
+                <p class="card-text"> 
+                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/buscarId/">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/buscarId/{id}</a> 
+                    Obtiene un elemento por id
+                </p>
+            </div>
+        </div>
+          <div class="card mt-4">
+            <h5 class="card-header"><span class="badge bg-primary">Method POST</span></h5>
+            <div class="card-body">
+                <h5 class="card-title">Libro</h5>
+                <p class="card-text"> 
+                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/crear">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/crear/</a> 
+                    Recibe un objeto de tipo libro
+                </p>
+                <h5 class="card-title">Usuario</h5>
+                <p class="card-text"> 
+                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/crear">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/crear/</a> 
+                    Recibe un objeto de tipo usuario
+                </p>
+                <h5 class="card-title">Ejemplares</h5>
+                <p class="card-text"> 
+                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/crear">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/crear/</a> 
+                    Recibe un objeto de tipo ejemplar
+                </p>
+            </div>
+          </div>
+          <div class="card mt-4">
+            <h5 class="card-header"><span class="badge bg-warning text-dark">Method PUT</span></h5>
+            <div class="card-body">
+                <h5 class="card-title">Libro</h5>
+                <p class="card-text"> 
+                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/</a> 
+                    Recibe el objeto con los campos editados
+                </p>
+                <h5 class="card-title">Usuario</h5>
+                <p class="card-text"> 
+                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/</a> 
+                    Recibe el objeto con los campos editados
+                </p>
+                <h5 class="card-title">Ejemplares</h5>
+                <p class="card-text"> 
+                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/</a> 
+                    Recibe el objeto con los campos editados
+                </p>
+            </div>
+          </div>
+          <div class="card mt-4">
+            <h5 class="card-header"><span class="badge bg-danger">Method DELETE</span></h5>
+            <div class="card-body">
+                <h5 class="card-title">Libro</h5>
+                <p class="card-text"> 
+                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/{id}">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/{id}</a> 
+                    Elimina un registro y recibe por parametro su ID
+                </p>
+                <h5 class="card-title">Usuario</h5>
+                <p class="card-text"> 
+                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/{id}">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/{id}</a> 
+                    Elimina un registro y recibe por parametro su ID
+                </p>
+                <h5 class="card-title">Ejemplares</h5>
+                <p class="card-text"> 
+                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/{id}">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/{id}</a> 
+                    Elimina un registro y recibe por parametro su ID
+                </p>
+            </div>
+          </div>
+          <div class="card mt-4 mb-4">
+              <h5 class="card-header"><span class="badge bg-primary">POST Login</span></h5>
+              <div class="card-body">
+                  <h5 class="card-title">Login</h5>
+                  <p class="card-text">
+                  <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/auth">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/auth/</a>
+                  Recibe un objeto de tipo login con correo y password, en caso de error envia un status y un mensaje
+              </p>
+              </div>
+          </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+</body>
+</html>

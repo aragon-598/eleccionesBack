@@ -17,6 +17,7 @@ import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioPar
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioUsuarios;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioVotosCandidato;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -52,6 +53,32 @@ public class VotosCandidatoRestController {
         }
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping(path = "/findById/{id}")
+    public ResponseEntity<VotosCandidato> getById(@PathVariable Integer id){
+
+        VotosCandidato vCandidato=new VotosCandidato();
+        boolean existe = false;
+
+        try {
+            
+            if (id != null) {
+                existe=votosCandidatoRepository.existsById(id);
+                if (existe) {
+                    vCandidato = votosCandidatoRepository.findById(id).get();
+
+                    return ResponseEntity.ok(vCandidato);
+                }else{
+                    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+                }
+            }
+
+        } catch (Exception e) {
+            logger.error("Error finById VotosCandidato", e);
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @PostMapping(path = "/crearVotoscandidatos")

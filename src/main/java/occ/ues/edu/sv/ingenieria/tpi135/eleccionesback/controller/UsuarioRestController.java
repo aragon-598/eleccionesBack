@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,6 +56,33 @@ public class UsuarioRestController {
 
     }
     
+    @GetMapping(path = "/findById/{id}")
+    public ResponseEntity<Usuarios> getById(@PathVariable Integer id){
+
+        boolean existe=false;
+        Usuarios user = new Usuarios();
+
+        try {
+            
+            if (id != null) {
+                existe = repoUsuarios.existsById(id);
+
+                if (existe) {
+                    user = repoUsuarios.findById(id).get();
+
+                    return ResponseEntity.ok(user);
+                } else {
+                    return ResponseEntity.notFound().build();
+                }
+            }
+
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
+
     @PostMapping("/login")
     public ResponseEntity<Object> verificarLogeo(@RequestBody Usuarios usr){
         List<Usuarios> match = new ArrayList<>();
