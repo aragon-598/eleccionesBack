@@ -12,20 +12,20 @@
 
     <div class="container mt-4 text-white">
         <h1>API documentation</h1>
-        <h2>BibliotecaWebApp</h2>
+        <h2>ElecSal</h2>
     </div>
 
     <div class="container mt-4">
         <div class="card">
-            <h5 class="card-header"><span class="badge bg-success">Method GET</span></h5>
+            <h5 class="card-header"><span class="badge bg-success">Methods GET</span></h5>
             <div class="card-body">
               <h5 class="card-title">Usuarios</h5>
               <p class="card-text"> 
-                  <a href="https://localhost:8080/findAll">https://localhost:8080/usuario/findAll</a> 
+                  <a href="https://localhost:8080/usuario/findAll">https://localhost:8080/usuario/findAll</a> 
                   Obtiene todos los elementos de la tabla
               </p>
               <p class="card-text"> 
-                <a href="https://localhost:8080/">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/buscarId/{id}</a> 
+                <a href="https://localhost:8080/usuario/findById/">https://localhost:8080/usuario/findById/{id}</a> 
                 Obtiene un elemento por id
               </p>
               <h5 class="card-title">Partidos</h5>
@@ -37,87 +37,120 @@
                 <a href="https://localhost:8080/partidos/findById/">https://localhost:8080/partidos/findById/{id}</a> 
                 Obtiene un elemento por id
               </p>
+              <h5 class="card-title">Cargos</h5>
+              <p class="card-text"> 
+                <a href="https://localhost:8080/cargos/findAll">https://localhost:8080/cargos/findAll</a> 
+                Lista de cargos existentes
+              </p>
+              <p class="card-text"> 
+                <a href="https://localhost:8080/cargos/findById/">https://localhost:8080/cargos/findById/{idCargo}</a> 
+                Lista de cargos existentes
+              </p>
               <h5 class="card-title">VotosCandidato</h5>
                 <p class="card-text"> 
                     <a href="https://localhost:8080/votosCandidatos/findAll">https://localhost:8080/votosCandidatos/findAll</a> 
                     Obtiene todos los elementos de la tabla
                 </p>
                 <p class="card-text"> 
-                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/buscarId/">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/buscarId/{id}</a> 
+                    <a href="https://localhost:8080/votosCandidatos/findById/">https://localhost:8080/votosCandidatos/findById/{id}</a> 
                     Obtiene un elemento por id
                 </p>
+                <p class="card-text"> 
+                    <a href="https://localhost:8080/votosCandidatos/findDiputadosDepartamento/">https://localhost:8080/votosCandidatos/findDiputadosDepartamento/{idDepartamento}</a> 
+                    Lista de candidatos a diputados por Departamento
+                </p>
+                <p class="card-text"> 
+                    <a href="https://localhost:8080/votosCandidatos/findAlcaldesMunicipio/">https://localhost:8080/votosCandidatos/findAlcaldesMunicipio/{idMunicipio}</a> 
+                    Lista de candidatos a Alcaldes por municipio
+                </p>
+                <p class="card-text"> 
+                    <a href="https://localhost:8080/votosCandidatos/findPresidentes">https://localhost:8080/votosCandidatos/findPresidentes</a> 
+                    Lista de candidatos a Presidentes
+                </p>
+                <p class="card-text"> 
+                    <a href="https://localhost:8080/votosCandidatos/diputadosElegidos/">https://localhost:8080/votosCandidatos/diputadosElegidos/{idDepartamento}</a> 
+                    Lista de diputados elegidos por departamento
+                </p>
+                <p class="card-text"> 
+                    <a href="https://localhost:8080/votosCandidatos/alcaldeElectoMunicipio/">https://localhost:8080/votosCandidatos/alcaldeElectoMunicipio/{idMunicipio}</a> 
+                    Alcalde electo
+                </p>
+                <p class="card-text"> 
+                    <a href="https://localhost:8080/votosCandidatos/presidenteElecto">https://localhost:8080/votosCandidatos/presidenteElecto</a> 
+                    Presidente electo
+                </p>
+
             </div>
         </div>
           <div class="card mt-4">
             <h5 class="card-header"><span class="badge bg-primary">Method POST</span></h5>
             <div class="card-body">
-                <h5 class="card-title">Libro</h5>
-                <p class="card-text"> 
-                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/crear">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/crear/</a> 
-                    Recibe un objeto de tipo libro
-                </p>
                 <h5 class="card-title">Usuario</h5>
                 <p class="card-text"> 
-                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/crear">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/crear/</a> 
-                    Recibe un objeto de tipo usuario
+                    <a href="https://localhost:8080/usuario/login">https://localhost:8080/usuario/login</a> 
+                    Recibe un objeto de tipo Usuario, puede enviar solamento dui y password
+                    <br>
+                    <code>
+                        <hr>
+                        {
+                            "dui": 222222222,
+                          "contrasenia": "98765"
+                          }
+                          <hr>
+                    </code>
                 </p>
-                <h5 class="card-title">Ejemplares</h5>
+                <h5 class="card-title">VotosCandidatos</h5>
                 <p class="card-text"> 
-                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/crear">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/crear/</a> 
-                    Recibe un objeto de tipo ejemplar
+                    <a href="https://localhost:8080/votosCandidatos/crearVotoscandidatos">https://localhost:8080/votosCandidatos/crearVotoscandidatos</a> 
+                    Recibe un objeto de VotosCandidato
+                    <code class="text-center">
+                        <hr>
+                        {<br>
+                            "idUsuario": {"idUsuario":8 },<br>
+                            "votos": 0,<br>
+                            "idCargo": {<br>
+                                "idCargo": 1 <br>
+                            },<br>
+                            "idPartido": {<br>
+                                "idPartido": 1 <br>
+                            } <br>
+                        }
+                        <hr>
+                    </code>
                 </p>
             </div>
           </div>
           <div class="card mt-4">
             <h5 class="card-header"><span class="badge bg-warning text-dark">Method PUT</span></h5>
             <div class="card-body">
-                <h5 class="card-title">Libro</h5>
-                <p class="card-text"> 
-                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/</a> 
-                    Recibe el objeto con los campos editados
-                </p>
                 <h5 class="card-title">Usuario</h5>
                 <p class="card-text"> 
-                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/</a> 
-                    Recibe el objeto con los campos editados
+                    <a href="https://localhost:8080/usuario/checkvoto">https://localhost:8080/usuario/checkvoto</a> 
+                    Recibe el objeto Usuario con el id y estadoVoto editado <br>
+                    <code>
+                        <hr>
+                        {
+                            "idUsuario":{"idUsuario":9}
+                            ,"estadoVoto": true
+                        }
+                        <hr>
+                    </code>
                 </p>
-                <h5 class="card-title">Ejemplares</h5>
+                <h5 class="card-title">VotosCandidato</h5>
                 <p class="card-text"> 
-                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/</a> 
-                    Recibe el objeto con los campos editados
+                    <a href="https://localhost:8080/votosCandidatos/actualizarvotos">https://localhost:8080/usuario/checkvoto</a> 
+                    Recibe el objeto Usuario con el id y votos editado <br>
+                    <code>
+                        <hr>
+                        {
+                            "idUsuario":{"idUsuario":100}
+                            ,"votos": 1
+                        }
+                        <hr>
+                    </code>
                 </p>
             </div>
-          </div>
-          <div class="card mt-4">
-            <h5 class="card-header"><span class="badge bg-danger">Method DELETE</span></h5>
-            <div class="card-body">
-                <h5 class="card-title">Libro</h5>
-                <p class="card-text"> 
-                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/{id}">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/libros/{id}</a> 
-                    Elimina un registro y recibe por parametro su ID
-                </p>
-                <h5 class="card-title">Usuario</h5>
-                <p class="card-text"> 
-                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/{id}">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/{id}</a> 
-                    Elimina un registro y recibe por parametro su ID
-                </p>
-                <h5 class="card-title">Ejemplares</h5>
-                <p class="card-text"> 
-                    <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/{id}">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/ejemplares/{id}</a> 
-                    Elimina un registro y recibe por parametro su ID
-                </p>
-            </div>
-          </div>
-          <div class="card mt-4 mb-4">
-              <h5 class="card-header"><span class="badge bg-primary">POST Login</span></h5>
-              <div class="card-body">
-                  <h5 class="card-title">Login</h5>
-                  <p class="card-text">
-                  <a href="https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/auth">https://biblioteca-web-app.herokuapp.com/BibliotecaWebApp-1.0-SNAPSHOT/resources/user/auth/</a>
-                  Recibe un objeto de tipo login con correo y password, en caso de error envia un status y un mensaje
-              </p>
-              </div>
-          </div>
+          </div><br>
     </div>
 
 

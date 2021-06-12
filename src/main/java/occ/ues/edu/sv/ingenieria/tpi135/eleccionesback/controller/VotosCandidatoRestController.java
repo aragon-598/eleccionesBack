@@ -210,7 +210,7 @@ public class VotosCandidatoRestController {
      * @return
      */
     @GetMapping(path="/diputadosElegidos/{idDepartamento}")
-    public ResponseEntity<List<VotosCandidato>> diputadosDepartamento(@PathVariable Integer idDepartamento) {
+    public ResponseEntity<Object> diputadosDepartamento(@PathVariable Integer idDepartamento) {
         
         List<VotosCandidato> listaDiputados = new ArrayList<>();
         List<VotosCandidato> listaCandidatos = new ArrayList<>();
@@ -220,25 +220,27 @@ public class VotosCandidatoRestController {
             
             if (idDepartamento != null) {
                 Departamentos departamento = repoDepartamentos.findById(idDepartamento).get();
-                
-                if (departamento != null) {
+                listaCandidatos = votosCandidatoRepository.findByIdCargo(cargo);
+                if (departamento != null && !listaCandidatos.isEmpty()) {
                     System.out.println(cargo.getCargo());
-                    listaCandidatos = votosCandidatoRepository.findByIdCargo(cargo);
-                    for (VotosCandidato votosCandidato : listaCandidatos) {
-                        if (!votosCandidato.getIdUsuario().getIdMunicipio().getIdDepartamento().equals(departamento)) {
-                            listaCandidatos.remove(votosCandidato);
+                    
+                    for (int i=0;i<listaCandidatos.size();i++) {
+                        if (listaCandidatos.get(i).getIdUsuario().getIdMunicipio().getIdDepartamento().equals(departamento)) {
+                            listaDiputados.add(listaCandidatos.get(i));
                         }
                         
                     }
                     
+                    if (listaCandidatos.size()>0) {
+                        Collections.sort(listaCandidatos, Collections.reverseOrder());
 
-                    Collections.sort(listaCandidatos, Collections.reverseOrder());
+
+                        return ResponseEntity.ok(listaCandidatos);                        
+                    } else {
+                        return new ResponseEntity<>("Aún no hay diputados por este departamento",HttpStatus.ACCEPTED);
+                    }
 
 
-                    return ResponseEntity.ok(listaCandidatos);
-
-                }else {
-                    
                 }
             }
 
@@ -263,16 +265,22 @@ public class VotosCandidatoRestController {
                 municipio=repoMunicipios.findById(id_municipio).get();
                 System.out.println("MUNICIPIOOOOOOOOOOOOOOOOOOOO"+municipio.getMunicipio());
                 listaAlcaldes = votosCandidatoRepository.findByIdCargo(cargo);
-                if (municipio!= null) {
+                System.out.println("Tamaño lista de alcaldes "+listaAlcaldes.size());
+
+                if (municipio!= null && listaAlcaldes.size()>0) {
                     for (int i =0;i<listaAlcaldes.size();i++){
                         if (listaAlcaldes.get(i).getIdUsuario().getIdMunicipio().getMunicipio().equals(municipio.getMunicipio())) {
                             System.out.println("MUNICIPIOOOOOOOOOOOOO ["+i+"] "+listaAlcaldes.get(i).getIdUsuario().getIdMunicipio().getMunicipio());
                             alcaldesMunicipios.add(listaAlcaldes.get(i));
                         }
                     }
-                    Collections.sort(alcaldesMunicipios, Collections.reverseOrder());
+                    if (alcaldesMunicipios.size()>0) {
+                        Collections.sort(alcaldesMunicipios, Collections.reverseOrder());
 
                     return ResponseEntity.ok(alcaldesMunicipios.get(0));
+                    }else{
+                        return new ResponseEntity<>("Aún no hay alcaldes postulados",HttpStatus.ACCEPTED);
+                    }
                 }
             }
 
@@ -299,6 +307,8 @@ public class VotosCandidatoRestController {
                 Collections.sort(listaPresidentes,Collections.reverseOrder());
 
                 return ResponseEntity.ok(listaPresidentes.get(0));
+            }else{
+                return new ResponseEntity<>("Aun no hay candidatos postulados",HttpStatus.ACCEPTED);
             }
 
         } catch (Exception e) {

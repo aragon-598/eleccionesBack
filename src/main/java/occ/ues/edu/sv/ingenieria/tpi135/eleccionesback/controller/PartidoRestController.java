@@ -41,7 +41,7 @@ public class PartidoRestController {
         return ResponseEntity.badRequest().build();
     }
 
-    @GetMapping(path = "findById/{id}")
+    @GetMapping(path = "/findById/{id}")
     public ResponseEntity<Partidos> getById(@PathVariable Integer id){
 
         Partidos partido = new Partidos();
@@ -66,28 +66,5 @@ public class PartidoRestController {
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
-
-    @GetMapping("/findById/{idPartido}")
-    public ResponseEntity<Partidos> findById(@PathVariable Integer idPartido){
-
-        boolean existe;
-        Partidos partido;
-        try {
-
-            if (idPartido != null ) {
-                existe = partidosRepository.existsByIdPartido(idPartido);
-                if (existe) {
-                    partido = partidosRepository.findById(idPartido).get();
-                    return ResponseEntity.ok(partido);
-                }else {
-                    return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-                }
-            }
-
-        }catch (Exception e){
-            logger.error("Error en findById Partido",e);
-        }
-        return ResponseEntity.badRequest().build();
     }
 }
