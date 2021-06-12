@@ -1,0 +1,24 @@
+version: "3"
+services:
+  spring_elecciones_container: #Nombre del contenedor para l aimagen de spring
+    image: spring_elecciones
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mariadb_container #indicamos que se inicie despues del contenedor de maria
+
+  mariadb_container: #nombre del contenedor para la imagen de maria db
+    image: mariadb
+    restart: always #si hay algun error que se reinicie el contenedor
+    volumes:
+      - mariadb_data:/var/lib/mysql #para que al borrar o modificar el contenedor, los datos no se pierdan
+      - ./database:/docker-entrypoint-initdb.d #indicamos la ubicacion del script sql para que se ejecute la DB
+    ports:
+      - "3306:3306"
+    environment:
+      - MARIADB_ROOT_PASSWORD=hola123
+      - MYSQL_DATABASE=eleccionesDB
+
+# Volumes
+volumes:
+  mariadb_data:

@@ -163,7 +163,7 @@ CREATE TABLE `usuarios` (
   KEY `usuarios_FK` (`id_rol`),
   CONSTRAINT `usuarios_FK` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`),
   CONSTRAINT `usuarios_FK_1` FOREIGN KEY (`id_municipio`) REFERENCES `municipios` (`id_municipio`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -172,7 +172,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'VALERI ALESSANDRA','DUEÑAS AVALOS',123456789,'F','12345',2,0,1),(2,'GABRIELA ALEXANDRA','DUEÑAS ALAS',987654321,'F','12345',2,0,1),(3,'JOSE ALEJANDRO','ARAGON RUGAMAS',111111111,'M','54321',1,0,2),(4,'CHRISTIAN VLADIMIR','AVALOS SERANOI',222222222,'M','98765',1,0,3);
+INSERT INTO `usuarios` VALUES (1,'VALERI ALESSANDRA','DUEÑAS AVALOS',123456789,'F','12345',2,0,1),(2,'GABRIELA ALEXANDRA','DUEÑAS ALAS',987654321,'F','12345',2,0,1),(3,'JOSE ALEJANDRO','ARAGON RUGAMAS',111111111,'M','54321',1,0,2),(4,'CHRISTIAN VLADIMIR','AVALOS SERANOI',222222222,'M','98765',1,0,3),(6,'PEDRO','PEREZ',333333333,'M','12345',2,0,1),(7,'MARIA','CARTAGENA',333333333,'M','12345',2,0,1),(8,'PEPE','PEPINO',333333333,'M','12345',2,0,1),(9,'CARO','CARITO',333333333,'M','12345',2,0,1),(10,'MEME','MEMON',333333333,'M','12345',2,0,1),(11,'JAIME','CARTEO',333333333,'M','12345',2,0,1),(12,'TUPAC','CHACUR',333333333,'M','12345',2,0,1);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -184,17 +184,19 @@ DROP TABLE IF EXISTS `votos_candidato`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `votos_candidato` (
+  `id_voto_candidato` int(4) NOT NULL AUTO_INCREMENT,
   `id_usuario` int(11) NOT NULL,
   `id_cargo` int(1) NOT NULL,
   `id_partido` int(2) NOT NULL,
-  `votos` int(9) DEFAULT NULL,
-  PRIMARY KEY (`id_usuario`),
-  KEY `votosCandidato_FK_1` (`id_partido`),
-  KEY `votosCandidato_FK_2` (`id_cargo`),
-  CONSTRAINT `votosCandidato_FK` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
-  CONSTRAINT `votosCandidato_FK_1` FOREIGN KEY (`id_partido`) REFERENCES `partidos` (`id_partido`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `votosCandidato_FK_2` FOREIGN KEY (`id_cargo`) REFERENCES `cargos` (`id_cargo`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `votos` int(9) DEFAULT 0,
+  PRIMARY KEY (`id_voto_candidato`),
+  KEY `votos_candidato_FK` (`id_cargo`),
+  KEY `votos_candidato_FK_1` (`id_usuario`),
+  KEY `votos_candidato_FK_2` (`id_partido`),
+  CONSTRAINT `votos_candidato_FK` FOREIGN KEY (`id_cargo`) REFERENCES `cargos` (`id_cargo`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `votos_candidato_FK_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id_usuario`),
+  CONSTRAINT `votos_candidato_FK_2` FOREIGN KEY (`id_partido`) REFERENCES `partidos` (`id_partido`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -203,7 +205,7 @@ CREATE TABLE `votos_candidato` (
 
 LOCK TABLES `votos_candidato` WRITE;
 /*!40000 ALTER TABLE `votos_candidato` DISABLE KEYS */;
-INSERT INTO `votos_candidato` VALUES (3,2,2,NULL),(4,2,1,NULL);
+INSERT INTO `votos_candidato` VALUES (2,4,2,1,0),(38,1,3,1,0),(39,2,3,1,0),(41,6,3,1,0),(42,7,3,1,0),(43,8,3,1,0),(44,9,3,1,0),(45,10,3,1,0),(46,11,1,1,0),(47,3,1,2,0);
 /*!40000 ALTER TABLE `votos_candidato` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -220,4 +222,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-09 23:59:13
+-- Dump completed on 2021-06-11 11:39:04
