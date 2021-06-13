@@ -22,6 +22,8 @@ import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioMun
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioPartidos;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioUsuarios;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioVotosCandidato;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +34,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/votosCandidatos")
+@CrossOrigin
 public class VotosCandidatoRestController {
 
     @Autowired
