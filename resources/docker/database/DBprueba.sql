@@ -66,7 +66,7 @@ CREATE TABLE `departamentos` (
 
 LOCK TABLES `departamentos` WRITE;
 /*!40000 ALTER TABLE `departamentos` DISABLE KEYS */;
-INSERT INTO `departamentos` VALUES (1,'Santa Ana',7),(2,'Sonsonate',6),(3,'San Salvador',24);
+INSERT INTO `departamentos` VALUES (1,'Santa Ana',7),(2,'Sonsonate',6),(3,'San Salvador',24),(4,'Ahuachapan',4),(5,'La Libertad',10),(6,'Chalatenango',3),(7,'Cuscatlan',3),(8,'Cabañas',3),(9,'La Paz',4),(10,'San Vicente',3),(11,'Usulutan',5),(12,'Jan Miguel',6),(13,'Morazan',3),(14,'La Union',3);
 /*!40000 ALTER TABLE `departamentos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -93,7 +93,7 @@ CREATE TABLE `municipios` (
 
 LOCK TABLES `municipios` WRITE;
 /*!40000 ALTER TABLE `municipios` DISABLE KEYS */;
-INSERT INTO `municipios` VALUES (1,1,'Santa Ana'),(2,1,'Metapan'),(3,2,'Izalco'),(4,3,'Soyapango'),(5,3,'Mejicanos');
+INSERT INTO `municipios` VALUES (1,1,'Santa Ana'),(2,1,'Metapan'),(3,2,'Izalco'),(4,3,'Soyapango'),(5,3,'Mejicanos'),(6,2,'Acajutla'),(7,3,'Apopa'),(8,4,'Atiquizaya'),(9,4,'Apaneca'),(10,5,'Santa Tecla'),(11,5,'Sacacoyo'),(12,6,'Comalapa'),(13,6,'Tejutla'),(14,7,'El Rosario'),(15,7,'Suchitoto'),(16,8,'Dolores'),(17,8,'Ilobasco'),(18,9,'San Luis Talpa'),(19,9,'Olocuilta'),(20,10,'San Lorenzo'),(21,10,'Guadalupe'),(22,11,'Berlin'),(23,11,'Jucuapa'),(24,12,'Jan Jorge'),(25,12,'Quelepa'),(26,13,'Jocoro'),(27,13,'Torola'),(28,14,'El Sauce'),(29,14,'Lislique');
 /*!40000 ALTER TABLE `municipios` ENABLE KEYS */;
 UNLOCK TABLES;
 

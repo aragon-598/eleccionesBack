@@ -215,8 +215,9 @@ public class VotosCandidatoRestController {
     @GetMapping(path="/diputadosElegidos/{idDepartamento}")
     public ResponseEntity<Object> diputadosDepartamento(@PathVariable Integer idDepartamento) {
         
-        List<VotosCandidato> listaDiputados = new ArrayList<>();
         List<VotosCandidato> listaCandidatos = new ArrayList<>();
+        List<VotosCandidato> listaDiputados = new ArrayList<>();
+        List<VotosCandidato> elegidos = new ArrayList<>();
         Cargos cargo = repoCargo.findByCargo("diputado").get();
 
         try {
@@ -233,14 +234,23 @@ public class VotosCandidatoRestController {
                         }
                         
                     }
-                    
-                    if (listaCandidatos.size()>0) {
-                        Collections.sort(listaCandidatos, Collections.reverseOrder());
-
-
-                        return ResponseEntity.ok(listaCandidatos);                        
-                    } else {
+                    if(listaDiputados.size()==0) {
                         return new ResponseEntity<>("Aún no hay diputados por este departamento",HttpStatus.ACCEPTED);
+                    }
+                    else if (listaDiputados.size()<=departamento.getCantidadDiputados()) {
+                        Collections.sort(listaDiputados, Collections.reverseOrder());
+
+
+                        return new ResponseEntity<>(listaDiputados,HttpStatus.OK);
+                        
+                    }else if(listaDiputados.size()>departamento.getCantidadDiputados()){
+                        
+                        for (int i = 0; i < departamento.getCantidadDiputados(); i++) {
+                            elegidos.add(listaDiputados.get(i));
+                        }
+
+                        return ResponseEntity.ok(elegidos);
+
                     }
 
 
