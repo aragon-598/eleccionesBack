@@ -11,16 +11,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Cargos;
-import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Departamentos;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Municipios;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Rol;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Usuarios;
-import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioCargos;
-import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioDepartamentos;
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.VotosCandidato;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioMunicipios;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioRol;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioUsuarios;
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioVotosCandidato;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +48,9 @@ public class UsuarioRestController {
 
     @Autowired
     RepositorioRol repoRol;
+    
+    @Autowired
+    RepositorioVotosCandidato repoVotos;
 
     @GetMapping(path="/findAll")
     public ResponseEntity<List<Usuarios>> findAll() {
@@ -97,6 +98,27 @@ public class UsuarioRestController {
         }
 
         return ResponseEntity.badRequest().build();
+    }
+    
+    @GetMapping(path="/sin-cargo")
+    public ResponseEntity<Object> getByCargo(){
+        List<Usuarios> usuariosSinCargo = new ArrayList<>();
+        try {
+            
+            
+            for (Usuarios usuarios : repoUsuarios.findAll()) {
+                for (VotosCandidato candidatos : repoVotos.findAll()) {
+                    if (usuarios.getIdUsuario() != candidatos.getIdUsuario().getIdUsuario()) {
+                        usuariosSinCargo.add(usuarios);
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+        }
+
+        return new ResponseEntity<>(usuariosSinCargo, HttpStatus.OK);
     }
 
     @PostMapping(path = "/crearUsuario")
