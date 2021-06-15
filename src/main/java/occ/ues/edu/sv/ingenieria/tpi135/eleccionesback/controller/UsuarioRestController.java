@@ -103,14 +103,21 @@ public class UsuarioRestController {
     @GetMapping(path="/sin-cargo")
     public ResponseEntity<Object> getByCargo(){
         List<Usuarios> usuariosSinCargo = new ArrayList<>();
+        boolean esta = false;
         try {
             
             
             for (Usuarios usuarios : repoUsuarios.findAll()) {
                 for (VotosCandidato candidatos : repoVotos.findAll()) {
-                    if (usuarios.getIdUsuario() != candidatos.getIdUsuario().getIdUsuario()) {
-                        usuariosSinCargo.add(usuarios);
+                    if (usuarios.getIdUsuario().equals(candidatos.getIdUsuario().getIdUsuario()) ) {
+                        esta = true;
                     }
+                }
+                if (!esta) {
+                    usuariosSinCargo.add(usuarios);
+                    
+                }else{
+                    esta = false;
                 }
             }
 
