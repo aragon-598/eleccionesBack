@@ -113,6 +113,7 @@ public class VotosCandidatoRestController {
      */
     @GetMapping(path = "/findDiputadosDepartamento/{id_departamento}")
     public ResponseEntity<Object> findDiputadosDepartamento (@PathVariable Integer id_departamento){
+        List<VotosCandidato> candidatos = new ArrayList<>();
         List<VotosCandidato> diputadosDepartamento = new ArrayList<>();
         Departamentos idDepartamento = new Departamentos();
         Cargos cargo = repoCargo.findByCargo("diputado").get();
@@ -124,15 +125,21 @@ public class VotosCandidatoRestController {
 
             if(id_departamento != null){
                 idDepartamento = repoDepartamentos.findById(id_departamento).get();
+                System.out.println("departamento de: "+idDepartamento.getDepartamento());
                 if (idDepartamento != null) {
                     for (int i=0;i<diputadosDepartamento.size();i++) {
-                        if (diputadosDepartamento.get(i).getIdUsuario().getIdMunicipio().getIdDepartamento().equals(idDepartamento)) {
-                            diputadosDepartamento.remove(diputadosDepartamento.get(i));
+                        if (diputadosDepartamento.get(i).getIdUsuario().getIdMunicipio().getIdDepartamento().getDepartamento().equals(idDepartamento.getDepartamento())) {
+                            System.out.println(" DEPARTAMENTO DE: "+diputadosDepartamento.get(i).getIdUsuario().getIdMunicipio().getIdDepartamento().getDepartamento());
+                            candidatos.add(diputadosDepartamento.get(i));
                         }
                     }
 
-                    //Lista de diputados por el departamento ingresado
-                    return ResponseEntity.ok(diputadosDepartamento);
+                    if (candidatos.size()==0) {
+                        return new ResponseEntity<>("No hay diputados aún para "+idDepartamento.getDepartamento(),HttpStatus.NOT_FOUND);
+                    } else {
+                        //Lista de diputados por el departamento ingresado
+                    return ResponseEntity.ok(candidatos);
+                    }
                 }
 
             }
@@ -166,12 +173,17 @@ public class VotosCandidatoRestController {
                 if (municipio != null) {
                     for (int i=0;i<alcaldesMunicipio.size();i++) {
                         if(!alcaldesMunicipio.get(i).getIdUsuario().getIdMunicipio().equals(municipio)){
+                            //System.out.println(" "+alcaldesMunicipio.get(i).getIdUsuario().getIdMunicipio().getIdDepartamento().getDepartamento());
                             alcaldesMunicipio.remove(alcaldesMunicipio.get(i));
                         }
                     }
 
-                    //Lista de diputados por el departamento ingresado
+                   if (alcaldesMunicipio.size()==0) {
+                       return new ResponseEntity<>("No hay alcaldes para "+municipio.getMunicipio(),HttpStatus.NOT_FOUND);
+                   } else {
+                        //Lista de diputados por el departamento ingresado
                     return ResponseEntity.ok(alcaldesMunicipio);
+                   }
                 }
 
             }

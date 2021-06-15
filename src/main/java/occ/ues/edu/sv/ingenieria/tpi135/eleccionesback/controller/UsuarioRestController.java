@@ -11,7 +11,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Cargos;
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Departamentos;
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Municipios;
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Rol;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.entity.Usuarios;
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioCargos;
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioDepartamentos;
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioMunicipios;
+import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioRol;
 import occ.ues.edu.sv.ingenieria.tpi135.eleccionesback.repository.RepositorioUsuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +44,12 @@ public class UsuarioRestController {
 
     @Autowired
     private RepositorioUsuarios repoUsuarios;
+
+    @Autowired
+    RepositorioMunicipios repoMuncipios;
+
+    @Autowired
+    RepositorioRol repoRol;
 
     @GetMapping(path="/findAll")
     public ResponseEntity<List<Usuarios>> findAll() {
@@ -81,6 +95,43 @@ public class UsuarioRestController {
         } catch (Exception e) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
         }
+
+        return ResponseEntity.badRequest().build();
+    }
+
+    @PostMapping(path = "/crearUsuario")
+    public ResponseEntity<Object> crearUsuario(@RequestBody Usuarios user){
+        boolean existe = false;
+        Municipios municipio=new Municipios();
+        Rol rol = new Rol();
+        try {
+            
+            if (user != null) {
+                existe = repoUsuarios.existsByDui(user.getDui());
+
+                if (existe) {
+                    return new ResponseEntity<>("Ya existe el usuario con DUI "+user.getDui(), HttpStatus.NOT_ACCEPTABLE);
+                }else{
+                    municipio =repoMuncipios.findById(user.getIdMunicipio().getIdMunicipio()).get();
+                    rol = repoRol.findById(user.getIdRol().getIdRol()).get();
+                    if (municipio != null && rol !=null) {
+                        user.setIdMunicipio(municipio);
+                        user.setIdRol(rol);
+
+                        repoUsuarios.save(user);
+
+                    return ResponseEntity.ok(user);
+                    }
+
+
+                    
+                }
+            }
+
+        } catch (Exception e) {
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage(), e);
+        }
+
 
         return ResponseEntity.badRequest().build();
     }
