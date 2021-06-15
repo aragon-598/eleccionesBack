@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/partidos")
+@RequestMapping(path="/partidos")
 @CrossOrigin
 public class PartidoRestController {
 
@@ -26,7 +26,7 @@ public class PartidoRestController {
     @Autowired
     RepositorioPartidos partidosRepository;
 
-    @GetMapping("/findAll")
+    @GetMapping(path="/findAll")
     public ResponseEntity<List<Partidos>> findAll(){
         List<Partidos> registros = new ArrayList<>();
 
@@ -43,7 +43,7 @@ public class PartidoRestController {
         return ResponseEntity.badRequest().build();
     }
 
-    @GetMapping(path = "/findById/{id}")
+    @GetMapping(path="/findById/{id}")
     public ResponseEntity<Partidos> getById(@PathVariable Integer id){
 
         Partidos partido = new Partidos();

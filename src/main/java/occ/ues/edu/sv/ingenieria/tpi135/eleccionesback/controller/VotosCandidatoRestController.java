@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RestController
-@RequestMapping("/votosCandidatos")
+@RequestMapping(path="/votosCandidatos")
 @CrossOrigin
 public class VotosCandidatoRestController {
 
@@ -212,7 +212,7 @@ public class VotosCandidatoRestController {
      * @param idDepartamento
      * @return
      */
-    @GetMapping(path="/diputadosElegidos/{idDepartamento}")
+    @GetMapping(path = "/diputadosElegidos/{idDepartamento}")
     public ResponseEntity<Object> diputadosDepartamento(@PathVariable Integer idDepartamento) {
         
         List<VotosCandidato> listaCandidatos = new ArrayList<>();

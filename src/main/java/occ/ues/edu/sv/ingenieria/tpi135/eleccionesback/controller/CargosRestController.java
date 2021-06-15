@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cargos")
+@RequestMapping(path="/cargos")
 @CrossOrigin
 public class CargosRestController {
 
@@ -26,7 +26,7 @@ public class CargosRestController {
     @Autowired
     RepositorioCargos cargosRepository;
 
-    @GetMapping("/findAll")
+    @GetMapping(path= "/findAll")
     public ResponseEntity<List<Cargos>> findAll(){
 
         List<Cargos> registros = new ArrayList<>();
@@ -44,7 +44,7 @@ public class CargosRestController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @GetMapping("/findById/{idCargo}")
+    @GetMapping(path= "/findById/{idCargo}")
     public ResponseEntity<Cargos> findById(@PathVariable Integer idCargo){
         boolean existe;
         Cargos cargo;

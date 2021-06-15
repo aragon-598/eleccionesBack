@@ -30,14 +30,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @author christian
  */
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping(path="/usuario")
 @CrossOrigin
 public class UsuarioRestController {
 
     @Autowired
     private RepositorioUsuarios repoUsuarios;
 
-    @GetMapping("/findAll")
+    @GetMapping(path="/findAll")
     public ResponseEntity<List<Usuarios>> findAll() {
         List<Usuarios> lista = new ArrayList<>();
 
@@ -58,7 +58,7 @@ public class UsuarioRestController {
 
     }
     
-    @GetMapping(path = "/findById/{id}")
+    @GetMapping(path="/findById/{id}")
     public ResponseEntity<Usuarios> getById(@PathVariable Integer id){
 
         boolean existe=false;
@@ -85,7 +85,7 @@ public class UsuarioRestController {
         return ResponseEntity.badRequest().build();
     }
 
-    @PostMapping("/login")
+    @PostMapping(path="/login")
     public ResponseEntity<Object> verificarLogeo(@RequestBody Usuarios usr){
         List<Usuarios> match = new ArrayList<>();
         if (usr == null || repoUsuarios == null) {
@@ -108,7 +108,7 @@ public class UsuarioRestController {
     }
 
 
-    @PutMapping("/checkvoto")
+    @PutMapping(path="/checkvoto")
     public ResponseEntity<Usuarios> checkVoto(@RequestBody Usuarios userChek){
         Usuarios existe=new Usuarios();
         try {
